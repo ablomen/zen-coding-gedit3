@@ -25,11 +25,14 @@ from html_navigation import HtmlNavigation
 from lorem_ipsum import lorem_ipsum
 
 try:
-	sys.path.append('/usr/lib/gedit-2/plugins')
-	from snippets.Document import Document as SnippetDocument
-	USE_SNIPPETS = True
+    sys.path.append('/usr/lib/gedit/plugins/')
+    from snippets import Document as SnippetDocument
+    USE_SNIPPETS = True
 except:
+    print 'failed importing snippets'
 	USE_SNIPPETS = False
+
+
 
 class ZenSnippet():
 
@@ -112,7 +115,8 @@ class ZenEditor():
 		
 			if USE_SNIPPETS:
 				if not (self.view in self.snippet_document):
-					self.snippet_document[self.view] = SnippetDocument(None, self.view)
+					self.snippet_document[self.view] = SnippetDocument()
+					self.snippet_document[self.view].view = self.view
 			else:
 				self.snippet_document[self.view] = None
 
@@ -162,7 +166,7 @@ class ZenEditor():
 		offset_start, offset_end = self.get_current_line_range()
 		iter_start = self.buffer.get_iter_at_offset(offset_start)
 		iter_end = self.buffer.get_iter_at_offset(offset_end)
-		return self.buffer.get_text(iter_start, iter_end).decode('UTF-8')
+		return self.buffer.get_text(iter_start, iter_end, True).decode('UTF-8')
 
 	def replace_content(self, value, offset_start=None, offset_end=None):
 
@@ -191,7 +195,7 @@ class ZenEditor():
 	def get_content(self):
 		iter_start = self.buffer.get_iter_at_offset(0)
 		iter_end = self.get_end_iter()
-		return self.buffer.get_text(iter_start, iter_end).decode('UTF-8')
+		return self.buffer.get_text(iter_start, iter_end, True).decode('UTF-8')
 
 	def get_syntax(self):
 		lang = self.window.get_active_document().get_language()
@@ -214,7 +218,7 @@ class ZenEditor():
 		offset_start, offset_end = self.get_selection_range()
 		iter_start = self.buffer.get_iter_at_offset(offset_start)
 		iter_end = self.buffer.get_iter_at_offset(offset_end)
-		return self.buffer.get_text(iter_start, iter_end).decode('UTF-8')
+		return self.buffer.get_text(iter_start, iter_end, True).decode('UTF-8')
 
 	def get_file_path(self):
 		return re.sub('^file://', '', self.document.get_uri())
@@ -514,7 +518,7 @@ class ZenEditor():
 				iter_start = self.buffer.get_iter_at_offset(node.start)
 				iter_end = self.buffer.get_iter_at_offset(node.end)
 
-				found = self.buffer.get_text(iter_start, iter_end).decode('UTF-8')
+				found = self.buffer.get_text(iter_start, iter_end, True).decode('UTF-8')
 				if not with_spaces and found.isspace() and found.find('\n') != -1:
 					offset_start = node.start
 					offset_end = node.end

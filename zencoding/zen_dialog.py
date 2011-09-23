@@ -15,9 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import pygtk
-pygtk.require('2.0')
-import gtk
+from gi.repository import Gtk
 
 class ZenDialog():
 
@@ -30,7 +28,7 @@ class ZenDialog():
         self.callback = callback
         self.last = last
 
-        self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        self.window = Gtk.Window(type=Gtk.WindowType.TOPLEVEL)
         self.window.set_decorated(False)
         self.window.connect("destroy", self.quit)
         self.window.connect("focus-out-event", self.focus_lost)
@@ -38,18 +36,18 @@ class ZenDialog():
         self.window.set_resizable(False)
         self.window.move(x - 15, y - 35)
 
-        self.frame = gtk.Frame()
+        self.frame = Gtk.Frame()
         self.window.add(self.frame)
         self.frame.show()
 
-        self.box = gtk.HBox()
+        self.box = Gtk.HBox()
         self.frame.add(self.box)
         self.box.show()
         
-        self.entry = gtk.Entry()
+        self.entry = Gtk.Entry()
         self.entry.connect("changed", self.update)
         self.entry.set_text(text)
-        self.entry.set_icon_from_icon_name(gtk.ENTRY_ICON_PRIMARY, 'zencoding')
+        self.entry.set_icon_from_icon_name(Gtk.EntryIconPosition.PRIMARY, 'zencoding')
         self.entry.set_width_chars(48)
         self.box.pack_start(self.entry, True, True, 4)
         self.entry.show()
@@ -87,23 +85,23 @@ class ZenDialog():
     def quit(self, widget=None, event=None):
         self.window.hide()
         self.window.destroy()
-        gtk.main_quit()
+        Gtk.main_quit()
 
     def main(self):
-        gtk.main()
+        Gtk.main()
 
 def main(editor, window, callback, text = "", last = False):
 
     # ensure the caret is hidden
     editor.view.set_cursor_visible(False)
-    
+
     # get coordinates of the cursor
     offset_start, offset_end = editor.get_selection_range()
     insert = editor.buffer.get_iter_at_offset(offset_start)
     location = editor.view.get_iter_location(insert)
-    window = editor.view.get_window(gtk.TEXT_WINDOW_TEXT)
-    xo, yo = window.get_origin()
-    xb, yb = editor.view.buffer_to_window_coords(gtk.TEXT_WINDOW_TEXT, location.x + location.width, location.y)
+    window = editor.view.get_window(Gtk.TextWindowType.TEXT)
+    xo, yo, zo = window.get_origin()
+    xb, yb = editor.view.buffer_to_window_coords(Gtk.TextWindowType.TEXT, location.x + location.width, location.y)
 
     # open dialog at coordinates with eventual text
     my_zen_dialog = ZenDialog(editor, xo + xb, yo + yb, callback, text, last)

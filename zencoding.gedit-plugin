@@ -1,7 +1,7 @@
-[Gedit Plugin]
+[Plugin]
 Loader=python
 Module=zencoding
-IAge=2
+IAge=3
 Name=Zen Coding
 Description=Expand expressions similar to CSS selectors into HTML, CSS or XSLT code
 Description[fr]=Développe des expressions similaires à des sélecteurs CSS en code HTML, CSS ou XSLT
