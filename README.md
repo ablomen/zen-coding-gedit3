@@ -39,6 +39,7 @@ Credits
 
 - Zen Coding is written by [Sergey Chikuyonok](http://chikuyonok.ru/)
 - Zen Coding for Gedit is written by [Franck Marcia](http://github.com/fmarcia)
+- Zen Coding for Gedit3 is written by [Moises Trovo](http://github.com/mtrovo)
 
 License
 -------
