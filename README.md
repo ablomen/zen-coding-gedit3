@@ -29,7 +29,7 @@ This plugin fully integrates [Zen Coding](http://code.google.com/p/zen-coding/) 
 Installation
 ------------
 
-1. Download [zip](http://github.com/fmarcia/zen-coding-gedit/zipball/master) or [tar](http://github.com/fmarcia/zen-coding-gedit/tarball/master) source
+1. Download [zip](http://github.com/mtrovo/zen-coding-gedit3/zipball/master) or [tar](http://github.com/mtrovo/zen-coding-gedit3/tarball/master) source
 2. Unpack it
 3. Run `./install.sh`
 4. In Gedit, go to Edit > Preferences > Plugins and enable the plugin
