@@ -107,13 +107,13 @@ class ZenCodingWindowHelper():
             ('ZenCodingSettingsAction',    None, 'E_dit settings...',                None,                "Customize snippets and abbreviations",            self.edit_settings)
         ]
         windowdata = dict()
-        self.window.set_data("ZenCodingPluginDataKey", windowdata)
+        self.window.ZenCodingPluginDataKey = windowdata
         windowdata["action_group"] = Gtk.ActionGroup("GeditZenCodingPluginActions")
         windowdata["action_group"].add_actions(actions)
         manager = self.window.get_ui_manager()
         manager.insert_action_group(windowdata["action_group"], -1)
         windowdata["ui_id"] = manager.add_ui_from_string(zencoding_ui_str)
-        self.window.set_data("ZenCodingPluginInfo", windowdata)
+        self.window.ZenCodingPluginInfo = windowdata
 
         # zen coding
         self.modified = None
@@ -125,7 +125,7 @@ class ZenCodingWindowHelper():
         self.editor = None
 
         # menu items
-        windowdata = self.window.get_data("ZenCodingPluginDataKey")
+        windowdata = self.window.ZenCodingPluginDataKey
         manager = self.window.get_ui_manager()
         manager.remove_ui(windowdata["ui_id"])
         manager.remove_action_group(windowdata["action_group"])
@@ -137,7 +137,7 @@ class ZenCodingWindowHelper():
     
         # disabled if not editable
         view = self.window.get_active_view()
-        windowdata = self.window.get_data("ZenCodingPluginDataKey")
+        windowdata = self.window.ZenCodingPluginDataKey
         windowdata["action_group"].set_sensitive(bool(view and view.get_editable()))
         
         # user settings
